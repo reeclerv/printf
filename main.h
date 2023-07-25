@@ -67,7 +67,6 @@ int print_hexa(va_list types, char map_to[],
 char buffer[], int flags, char flag_ch, int width, int precision, int size);
 
 /* Function to print non printable characters */
-<<<<<<< HEAD
 int print_non_printable(va_list arglist, char buffer[],
 	int flags, int width, int precision, int size);
 
@@ -83,23 +82,6 @@ int get_size(const char *format, int *i);
 
 /*Function to print string in reverse*/
 int print_reverse(va_list arglist, char buffer[],
-=======
-int handle_non_printable(va_list arglist, char buffer[],
-	int flags, int width, int precision, int size);
-
-/* Funcion to print memory address */
-int handle_pointer(va_list arglist, char buffer[],
-	int flags, int width, int precision, int size);
-
-/* Funcions to handle other specifiers */
-int get_flags(const char *format, int *param);
-int get_width(const char *format, int *argz, va_list arglist);
-int get_precision(const char *format, int *argz, va_list arglist);
-int get_size(const char *format, int *arglist);
-
-/*Function to print string in reverse*/
-int handle_reverse(va_list arglist, char buffer[],
->>>>>>> 2f5f655b77c0c6443fc0bb9bf9772ad408e5ea8a
 	int flags, int width, int precision, int size);
 
 /*Function to print a string in rot 13*/
