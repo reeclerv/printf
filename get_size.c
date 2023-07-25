@@ -3,13 +3,13 @@
 /**
  * get_size -Calculates the size to cast the argument
  * @format: Formatted string in which to print the arguments
- * @arglist: List of arguments to be printed.
+ * @list: List of arguments to be printed.
  *
  * Return: Precision.
  */
-int get_size(const char *format, int *arglist)
+int get_size(const char *format, int *list)
 {
-	int curr_i = *arglist + 1;
+	int curr_i = *list + 1;
 	int size = 0;
 
 	if (format[curr_i] == 'l')
@@ -18,9 +18,9 @@ int get_size(const char *format, int *arglist)
 		size = S_SHORT;
 
 	if (size == 0)
-		*arglist = curr_i - 1;
+		*list = curr_i - 1;
 	else
-		*arglist = curr_i;
+		*list = curr_i;
 
 	return (size);
 }

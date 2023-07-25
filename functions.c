@@ -15,7 +15,7 @@ int handle_char(va_list types, char buffer[],
 {
 	char c = va_arg(types, int);
 
-	return (handle_write_char(c, buffer, flags, width, precision, size));
+	return (handle_display_char(c, buffer, flags, width, precision, size));
 }
 
  /**
@@ -52,7 +52,7 @@ int handle_string(va_list types, char buffer[],
 
 	if (width > length)
 	{
-		if (flags & F_MINUS)
+		if (flags & F_NEG)
 		{
 			write(1, &str[0], length);
 			for (i = width - length; i > 0; i--)
@@ -93,12 +93,12 @@ int handle_percent(va_list types, char buffer[],
 	return (write(1, "%%", 1));
 }
 
-/**
+/*
  * PRINT INT
-/**
+ *
  * handle_int function prints int
  * it takes in parameters; va_list types, char buffer[], 
- * int flags, int widt, int precision and int size
+ * int flags, int width, int precision and int size
  */
 int handle_int(va_list types, char buffer[],
 	int flags, int width, int precision, int size)
@@ -130,18 +130,18 @@ int handle_int(va_list types, char buffer[],
 
 	i++;
 
-	return (write_number(is_negative, i, buffer, flags, width, precision, size));
+	return (display_number(is_negative, i, buffer, flags, width, precision, size));
 }
 
-/**
+/*
  * PRINT BINARY
-/**
+ *
  * handle_binary function prints binary
  * it takes in parameters; va_list types, char buffer[], 
- * int flags, int widt, int precision and int size
+ * int flags, int width, int precision and int size
+ *
+ * n: Numbers of char printed.
  */
- n: Numbers of char printed.
- 
 int handle_binary(va_list types, char buffer[],
 	int flags, int width, int precision, int size)
 {

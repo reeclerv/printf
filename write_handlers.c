@@ -5,7 +5,7 @@
  * handle_display_char - Prints a string
  * it takes in parameters; va_list types, char buffer[], 
  * int flags, int widt, int precision and int size
- */
+ *
  *
  * Return: Number of chars printed.
  */
@@ -30,7 +30,7 @@ int handle_display_char(char c, char buffer[],
 		for (i = 0; i < width - 1; i++)
 			buffer[BUFF_SIZE - i - 2] = padd;
 
-		if (flags & F_MINUS)
+		if (flags & F_NEG)
 			return (write(1, &buffer[0], 1) +
 					write(1, &buffer[BUFF_SIZE - i - 1], width - 1));
 		else
@@ -46,7 +46,7 @@ int handle_display_char(char c, char buffer[],
  * display_number - Prints a string
  * it takes in parameters; va_list types, char buffer[], 
  * int flags, int widt, int precision and int size
- */
+ *
  *
  * Return: Number of chars printed.
  */
@@ -58,16 +58,16 @@ int display_number(int is_negative, int ind, char buffer[],
 
 	UNUSED(size);
 
-	if ((flags & F_ZERO) && !(flags & F_MINUS))
+	if ((flags & F_ZERO) && !(flags & F_NEG))
 		padd = '0';
 	if (is_negative)
 		extra_ch = '-';
-	else if (flags & F_PLUS)
+	else if (flags & F_POS)
 		extra_ch = '+';
 	else if (flags & F_SPACE)
 		extra_ch = ' ';
 
-	return (write_num(ind, buffer, flags, width, precision,
+	return (display_num(ind, buffer, flags, width, precision,
 		length, padd, extra_ch));
 }
 
@@ -101,19 +101,19 @@ int display_num(int ind, char buffer[],
 		for (i = 1; i < width - length + 1; i++)
 			buffer[i] = padd;
 		buffer[i] = '\0';
-		if (flags & F_MINUS && padd == ' ')/* Asign extra char to left of buffer */
+		if (flags & F_NEG && padd == ' ')/* Asign extra char to left of buffer */
 		{
 			if (extra_c)
 				buffer[--ind] = extra_c;
 			return (write(1, &buffer[ind], length) + write(1, &buffer[1], i - 1));
 		}
-		else if (!(flags & F_MINUS) && padd == ' ')/* extra char to left of buff */
+		else if (!(flags & F_NEG) && padd == ' ')/* extra char to left of buff */
 		{
 			if (extra_c)
 				buffer[--ind] = extra_c;
 			return (write(1, &buffer[1], i - 1) + write(1, &buffer[ind], length));
 		}
-		else if (!(flags & F_MINUS) && padd == '0')/* extra char to left of padd */
+		else if (!(flags & F_NEG) && padd == '0')/* extra char to left of padd */
 		{
 			if (extra_c)
 				buffer[--padd_start] = extra_c;
@@ -158,7 +158,7 @@ int display_unsgnd(int is_negative, int ind,
 		length++;
 	}
 
-	if ((flags & F_ZERO) && !(flags & F_MINUS))
+	if ((flags & F_ZERO) && !(flags & F_NEG))
 		padd = '0';
 
 	if (width > length)
@@ -168,7 +168,7 @@ int display_unsgnd(int is_negative, int ind,
 
 		buffer[i] = '\0';
 
-		if (flags & F_MINUS) /* Asign extra char to left of buffer [buffer>padd]*/
+		if (flags & F_NEG) /* Asign extra char to left of buffer [buffer>padd]*/
 		{
 			return (write(1, &buffer[ind], length) + write(1, &buffer[0], i));
 		}
@@ -199,7 +199,7 @@ int display_pointer(char buffer[], int ind, int length,
 		for (i = 3; i < width - length + 3; i++)
 			buffer[i] = padd;
 		buffer[i] = '\0';
-		if (flags & F_MINUS && padd == ' ')/* Asign extra char to left of buffer */
+		if (flags & F_NEG && padd == ' ')/* Asign extra char to left of buffer */
 		{
 			buffer[--ind] = 'x';
 			buffer[--ind] = '0';
@@ -207,7 +207,7 @@ int display_pointer(char buffer[], int ind, int length,
 				buffer[--ind] = extra_c;
 			return (write(1, &buffer[ind], length) + write(1, &buffer[3], i - 3));
 		}
-		else if (!(flags & F_MINUS) && padd == ' ')/* extra char to left of buffer */
+		else if (!(flags & F_NEG) && padd == ' ')/* extra char to left of buffer */
 		{
 			buffer[--ind] = 'x';
 			buffer[--ind] = '0';
@@ -215,7 +215,7 @@ int display_pointer(char buffer[], int ind, int length,
 				buffer[--ind] = extra_c;
 			return (write(1, &buffer[3], i - 3) + write(1, &buffer[ind], length));
 		}
-		else if (!(flags & F_MINUS) && padd == '0')/* extra char to left of padd */
+		else if (!(flags & F_NEG) && padd == '0')/* extra char to left of padd */
 		{
 			if (extra_c)
 				buffer[--padd_start] = extra_c;

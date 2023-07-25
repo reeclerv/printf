@@ -48,7 +48,7 @@ int print_pointer(va_list arglist, char buffer[],
 	ind++;
 
 	/*return (write(1, &buffer[i], BUFF_SIZE - i - 1));*/
-	return (write_pointer(buffer, ind, length,
+	return (display_pointer(buffer, ind, length,
 		width, flags, padd, extra_c, padd_start));
 }
 
@@ -82,7 +82,7 @@ int print_non_printable(va_list arglist, char buffer[],
 		if (is_printable(str[i]))
 			buffer[i + offset] = str[i];
 		else
-			offset += append_hexa_code(str[i], buffer, i + offset);
+			offset += append_hexa_ascii(str[i], buffer, i + offset);
 
 		i++;
 	}
@@ -146,7 +146,7 @@ int print_reverse(va_list arglist, char buffer[],
  * @size: Size specifier
  * Return: Numbers of chars printed
  */
-int print_rot13string(va_list arglist, char buffer[],
+int handle_rot13string(va_list arglist, char buffer[],
 	int flags, int width, int precision, int size)
 {
 	char x;

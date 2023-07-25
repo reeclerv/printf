@@ -7,7 +7,7 @@
  * 
  * Return: Flags:
  */
-int get_flags(const char *format, int *param)
+int get_flags(const char *format, int *i)
 {
 	/* - + 0 # ' ' */
 	/* 1 2 4 8  16 */
@@ -16,9 +16,9 @@ int get_flags(const char *format, int *param)
 	const char F_CHAR[] = {'-', '+', '0', '#', ' ', '\0'};
 	const int F_ARRY[] = {F_NEG, F_POS, F_ZERO, F_HASH, F_SPACE, 0};
 
-	for (curr_i = *param + 1; format[curr_i] != '\0'; curr_i++)
+	for (curr_i = *i + 1; format[curr_i] != '\0'; curr_i++)
 	{
-		for (j = 0; FLAGS_CH[j] != '\0'; j++)
+		for (j = 0; F_CHAR[j] != '\0'; j++)
 			if (format[curr_i] == F_CHAR[j])
 			{
 				flags |= F_ARRY[j];
@@ -29,7 +29,7 @@ int get_flags(const char *format, int *param)
 			break;
 	}
 
-	*param = curr_i - 1;
+	*i = curr_i - 1;
 
 	return (flags);
 }
